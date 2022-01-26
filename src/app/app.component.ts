@@ -7,6 +7,19 @@ import { MenuEventArgs } from '@syncfusion/ej2-navigations';
 import { TreeGridComponent,  } from '@syncfusion/ej2-angular-treegrid';
 
 
+interface EColumn {
+  field: string;
+  headerText: string;
+  textAlign: string;
+  format?: string;
+  width: number;  
+}
+
+// <e-column field='taskID' headerText='Task ID' textAlign='Right' width=70></e-column>
+// <e-column field='taskName' headerText='Task Name' textAlign='Left' width=200></e-column>
+// <e-column field='startDate' headerText='Start Date' textAlign='Right' format='yMd' width=90></e-column>
+// <e-column field='duration' headerText='Duration' textAlign='Right' width=80></e-column>
+
 @Component({
   selector: 'app-root',
   template: `
@@ -18,10 +31,12 @@ import { TreeGridComponent,  } from '@syncfusion/ej2-angular-treegrid';
     [editSettings]='editSettings'>
 
   <e-columns>
-      <e-column field='taskID' headerText='Task ID' textAlign='Right' width=70></e-column>
-      <e-column field='taskName' headerText='Task Name' textAlign='Left' width=200></e-column>
-      <e-column field='startDate' headerText='Start Date' textAlign='Right' format='yMd' width=90></e-column>
-      <e-column field='duration' headerText='Duration' textAlign='Right' width=80></e-column>
+      <e-column *ngFor="let col of eColumns" 
+        [field]='col.field' 
+        [headerText]='col.headerText' 
+        [textAlign]='col.textAlign' 
+        [width]='col.width'>
+        </e-column>
   </e-columns>
   </ejs-treegrid>
   `,
@@ -30,6 +45,13 @@ import { TreeGridComponent,  } from '@syncfusion/ej2-angular-treegrid';
 })
 export class AppComponent implements OnInit{
   title = 'AngularTreeGrid';
+
+  public eColumns: EColumn[] = [
+    {field: 'taskID', headerText: 'Task ID', textAlign: 'Right', width: 70},
+    {field: 'taskName', headerText: 'Task Name', textAlign: 'Left', width: 200},
+    {field: 'startDate', headerText: 'Start Date', textAlign: 'Right', format: 'yMd', width: 90},
+    {field: 'duration', headerText: 'Duration', textAlign: 'Right', width: 80},
+  ]
 
   public data: Object[];
   public sortSettings: SortSettingsModel;
